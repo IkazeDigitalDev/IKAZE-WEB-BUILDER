@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ikaze Web Builder</title>
+<meta name="description" content="">
+<meta name="color-scheme" content="dark">
+<style>
+:root{--bg:#04050f;--tx:#eef1ff;--mu:#b8c0e8;--bl:#3b82ff;--vi:#8b5cf6;--cy:#22d3ee;--gl:rgba(14,19,46,.68);--bd:rgba(110,140,255,.35);color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*:before,*:after{box-sizing:inherit}
+html{scroll-padding-top:80px}
+body{margin:0;color:var(--tx);font:1rem/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:radial-gradient(ellipse at 70% 20%,#16205a 0,transparent 55%),radial-gradient(ellipse at 10% 80%,#2a1458 0,transparent 50%),var(--bg);overflow-x:hidden;min-height:100vh}
+#cv{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+header,main,footer{position:relative;z-index:1}
+a{color:var(--cy)}
+:focus-visible{outline:3px solid var(--cy);outline-offset:3px}
+.sk{position:absolute;left:-999px;top:0;background:var(--cy);color:#001;padding:.7rem 1rem;z-index:99}.sk:focus{left:0}
+.w{width:min(1120px,100% - 2rem);margin-inline:auto}
+header{position:sticky;top:0;background:rgba(4,5,15,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--bd);z-index:30}
+.bar{display:flex;align-items:center;gap:.5rem;min-height:62px;flex-wrap:wrap;padding:.3rem 0}
+.logo{font-weight:800;letter-spacing:.04em;color:var(--tx);text-decoration:none;margin-right:auto}.logo b{background:linear-gradient(90deg,var(--cy),var(--vi));-webkit-background-clip:text;background-clip:text;color:transparent}
+select,input,button,.btn{font:inherit}
+select,input[type=text],input[type=email],input[type=number],input[type=password]{min-height:44px;background:#0d1230;color:var(--tx);border:1px solid var(--bd);border-radius:8px;padding:0 .7rem;max-width:100%}
+.mb{min-height:44px;min-width:44px;background:#0d1230;color:var(--tx);border:1px solid var(--bd);border-radius:8px;cursor:pointer;padding:0 .8rem}
+#nv{display:none;width:100%}#nv.o{display:block}
+#nv ul{list-style:none;margin:0;padding:0}
+#nv a,#nv button.mr{display:flex;align-items:center;min-height:46px;padding:0 .6rem;color:var(--tx);text-decoration:none;border:0;background:none;width:100%;cursor:pointer;text-align:left;border-top:1px solid rgba(110,140,255,.18)}
+#nv a[aria-current=page]{color:var(--cy);font-weight:700}
+#nv a:hover,#nv button.mr:hover{color:var(--cy)}
+.sub{display:none;background:rgba(10,14,40,.95)}.sub.o{display:block}
+@media(min-width:1000px){.mb{display:none}#nv{display:block!important;width:auto;order:2}#nv>ul{display:flex;gap:.1rem;align-items:center}#nv a,#nv button.mr{border:0;padding:0 .6rem;font-size:.93rem;width:auto}li.dd{position:relative}.sub{position:absolute;right:0;top:100%;min-width:210px;border:1px solid var(--bd);border-radius:10px;overflow:hidden}.lgw{order:3}.bar{flex-wrap:nowrap}.logo{margin-right:1rem}}
+.lgw{display:flex;align-items:center;gap:.4rem;font-size:.85rem;color:var(--mu)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:.5rem 1.4rem;border-radius:999px;border:0;color:#fff;font-weight:700;text-decoration:none;cursor:pointer;background:linear-gradient(90deg,var(--bl),var(--vi));box-shadow:0 0 22px rgba(91,110,255,.45)}
+.btn:hover{filter:brightness(1.15)}
+.btn.g2{background:transparent;border:1px solid var(--cy);box-shadow:none;color:var(--cy)}
+.row{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.2rem}
+.hero{padding:3.2rem 0 2rem}
+h1{font-size:clamp(1.9rem,7vw,3.6rem);line-height:1.1;margin:.8rem 0}
+h2{font-size:clamp(1.4rem,4.5vw,2rem);margin:0 0 .8rem}
+h3{margin:.3rem 0}
+p{margin:.5rem 0;max-width:70ch}.lead{font-size:1.1rem;color:var(--mu)}
+.bd2{display:inline-block;border:1px solid var(--cy);color:var(--cy);border-radius:999px;padding:.2rem .8rem;font-size:.85rem;font-weight:700}
+.st{background:var(--gl);border:1px solid var(--bd);border-left:5px solid var(--cy);border-radius:10px;padding:.8rem 1rem;margin:1.2rem 0;max-width:72ch;backdrop-filter:blur(8px)}
+.grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));margin:1.2rem 0}
+.cd{background:var(--gl);border:1px solid var(--bd);border-radius:14px;padding:1.1rem;backdrop-filter:blur(8px);box-shadow:0 0 0 1px rgba(139,92,246,.12),0 8px 30px rgba(0,0,0,.35)}
+.tg{font-size:.75rem;font-weight:700;color:var(--cy);text-transform:uppercase;letter-spacing:.05em}
+.pg{padding:2rem 0 3rem}.lg3{margin:1.4rem 0;padding:1.4rem 1.5rem}.lg3 p{font-size:1.05rem;color:#dfe4ff}
+.mk{height:130px;border-radius:10px;margin-bottom:.7rem;background:linear-gradient(135deg,hsl(var(--h),80%,45%),hsl(calc(var(--h) + 50),70%,25%));position:relative;overflow:hidden}
+.mk:before{content:"";position:absolute;left:10%;right:10%;top:18%;height:12px;background:rgba(255,255,255,.55);border-radius:6px}
+.mk:after{content:"";position:absolute;left:10%;right:30%;top:42%;height:44px;background:rgba(255,255,255,.2);border-radius:8px;box-shadow:0 56px 0 -14px rgba(255,255,255,.25)}
+.lg2 .mk{height:min(300px,50vw)}
+ul.ft{padding-left:1.1rem;margin:.4rem 0;color:var(--mu)}
+.pr{font-weight:800;font-size:1.2rem}
+.pill{display:inline-block;font-size:.75rem;font-weight:700;border-radius:999px;padding:.1rem .6rem;border:1px solid var(--cy);color:var(--cy)}
+label{display:grid;gap:.3rem;font-weight:600;margin:.7rem 0}
+label.ck{display:flex;gap:.6rem;align-items:center;font-weight:400}
+input[type=checkbox]{width:22px;height:22px}
+.er{color:#ffb4a3;font-weight:400;min-height:1.1em}
+.ok{background:var(--gl);border-left:5px solid var(--cy);padding:.8rem 1rem;border-radius:8px;margin-top:.8rem}
+details{background:var(--gl);border:1px solid var(--bd);border-radius:10px;margin:.6rem 0;max-width:780px}
+summary{cursor:pointer;padding:.9rem 1rem;min-height:48px;font-weight:700}
+details p{padding:0 1rem 1rem;margin:0}
+form{max-width:460px}
+dialog{background:#0b0f2a;color:var(--tx);border:1px solid var(--bd);border-radius:14px;width:min(560px,100% - 2rem);padding:1.2rem}
+dialog::backdrop{background:rgba(0,0,0,.7)}
+footer{background:rgba(3,4,12,.92);border-top:1px solid var(--bd);padding:2rem 0 1.5rem}
+.fg{display:grid;gap:1.2rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr))}
+footer a{display:inline-block;padding:.5rem 0;min-height:44px}
+.cr{border-top:1px solid var(--bd);margin-top:1.2rem;padding-top:1rem;color:var(--mu);font-size:.95rem}
+.cr a{font-weight:700}
+.wr{overflow-wrap:anywhere}
+</style>
+</head>
+<body>
+<canvas id="cv" aria-hidden="true"></canvas>
+<a class="sk" href="#main" id="sk"></a>
+<header><div class="w bar">
+<a class="logo" href="#home">IKAZE <b>WEB BUILDER</b></a>
+<div class="lgw"><label for="ls" id="lg" style="display:inline;margin:0;font-weight:400"></label><select id="ls"><option value="en">EN – English</option><option value="rw">RW – Kinyarwanda</option><option value="fr">FR – Français</option></select></div>
+<button class="mb" id="mb" aria-expanded="false" aria-controls="nv"></button>
+<nav id="nv"></nav>
+</div></header>
+<main id="main" class="w pg"></main>
+<footer><div class="w" id="ft"></div></footer>
+<dialog id="dg" aria-labelledby="dt"><h2 id="dt"></h2><div id="db"></div><p id="dn" class="mu"></p><button class="btn" id="dc" type="button"></button></dialog>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+var D={
+en:{ti:"Ikaze Web Builder — Create Beyond Limits. Build the Future.",de:"A website and app builder for Africa, starting in Rwanda. In development — join the early-access list.",
+nav:["Home","Create","Templates","Pricing","About","Contact","Sign in","More"],mo:["FAQ","Terms and conditions","Privacy policy","Report a problem"],
+bd:"In development · Not available yet",h1:"Create Beyond Limits. Build the Future.",ld:"Ikaze Web Builder is being built to help people and organisations in Africa, starting in Rwanda, create websites and web apps with AI, templates or a blank canvas.",
+st:"The builder, accounts and payments are not live yet. This site shows what is planned. You can join the early-access list.",c1:"Join early access",c2:"Browse demo templates",pl:"Planned",
+ft:["Start with AI|Describe your idea and get a first draft.","Start with a template|Pick a design and make it yours.","Start from scratch|Open a blank workspace and build freely."],
+cH:"Create",cP:"Three ways to start are planned. None of them can be used yet.",cN:"Why not live yet: sign-in, saving, AI generation and publishing need backend services that are still being set up.",
+tH:"Template marketplace (demo)",tP:"Sample templates with illustrative prices. This is demo content until the marketplace opens.",all:"All categories",
+cats:["Business","Portfolio","Online store","School","Restaurant","NGO","Real estate","Dashboard"],pv:"Preview",gt:"Get early access",cl:"Close",fr:"Free",pd:"Paid",tf:["Responsive","Forms","Gallery"],dn:"Demo content: a rough sketch, not the final template.",
+pH:"Pricing (illustrative)",pP:"These tiers are illustrative and may change before launch. Prices are in Rwandan francs (RWF). Nothing can be bought yet.",
+tiers:["Free","Basic","Standard","Premium","Professional","Enterprise"],ent:"Custom pricing",
+kH:"Cost estimator",kT:"Template tier",kA:"AI website generation (one-time, +10,000 RWF)",kE:"Advanced editing (one-time, +15,000 RWF)",kM:"Months of hosting (recurring, 5,000 RWF per month)",kO:"One-time estimate",kR:"Recurring hosting",kN:"Estimates only. No payment can be made on this site.",
+aH:"About Ikaze Web Builder",aP:"Ikaze Web Builder is a digital platform designed to make website and application creation more accessible, creative and powerful.",dv:"Developer",dv2:"Founder and developer",
+mH:"Meet the founder",mP:"To learn more about Niyibigira Theoneste, search his name on Google or visit his website.",
+ctH:"Contact",ctP:"Reach Ikaze Digital:",ctN:"Instagram and LinkedIn: search “Ikaze Digital”. Verified profile links will be added.",
+sH:"Sign in",sP:"Sign-in, Google login and accounts are not available yet. They need Firebase to be configured. Leave your details to be told when accounts open.",
+jN:"Your name",jE:"Email address",jS:"Join early access",eN:"Please enter your name.",eE:"Please enter a valid email address.",ok:"Your email app has opened with a ready message. Press send to finish — you are not on the list until we receive it.",
+fq:["Can I build a website now?|Not yet. The builder is in development.","Are the prices final?|No. They are illustrative and may change before launch.","Can I pay on this site?|No. No payments are possible yet."],
+tm:["Terms and conditions","This website is informational. The builder, accounts, templates and prices are in development and not yet available.","Planned features, prices and payment options may change before launch.","Joining the early-access list is not a purchase and does not guarantee access."],
+pc:["Privacy policy","We collect only the name and email address you send us to join the early-access list.","We use them only to contact you about Ikaze Web Builder. We do not sell your data.","To ask us to delete your details, write to ikazedigital@gmail.com."],
+rt2:"Scroll to read the full story — about 5 minutes.",
+ls:["Why Ikaze Web Builder exists|For many small businesses, creators, schools and community groups in Africa, having a good website still feels out of reach. Hiring a developer can be expensive, free tools can be confusing, and many options are not designed for local needs, languages or payment habits.|Ikaze Web Builder starts from a simple belief: if you can describe what you do, you should be able to show it to the world. We are building a tool that tries to make that step shorter, clearer and more affordable, beginning in Rwanda.",
+"Three ways to start|The plan is to let you begin in the way that suits you. You could describe your idea in your own words and receive a first draft, pick a ready-made template and change it, or open a blank page and build everything yourself.|None of these paths exists yet, but the idea behind all of them is the same: you stay in control. A draft, a template or a blank page are only starting points, and everything should remain editable by you.",
+"How the AI is meant to help|AI is planned as an assistant, not a replacement for your judgment. You would describe a business, such as a tailoring shop in Kigali, and the tool would suggest pages, headings and wording that you can accept, change or throw away.|We want it to be honest about what it does. Drafts can contain mistakes, so you should always read, correct and make the text your own before sharing it with customers. The AI features depend on a secure server connection that is still being set up.",
+"Templates for real needs|A template marketplace is planned with designs for businesses, portfolios, online shops, schools, hospitals, restaurants, hotels, churches, NGOs, real estate, news, blogs, music, agencies, landing pages, dashboards and learning platforms.|The templates you see on this site are demo sketches with sample prices. When the marketplace opens, each one should show a preview, its features, whether it works well on phones, and a clear price in Rwandan francs before you decide.",
+"More than websites|Beyond websites, we want to support simple web applications: booking pages, inventory trackers, school records, small customer lists and dashboards. Many organisations need these tools but cannot afford custom software.|This is a long-term goal. Applications need databases, accounts and careful security, so they will come after the website tools are working well. We would rather launch fewer things that work than many that only look good.",
+"Built for phones and real connections|Most people in our region reach the internet from a phone, often on a limited data plan. That is why the design is mobile-first, and why we aim for lightweight pages that load quickly.|We are not publishing speed numbers because we have not measured a finished product yet. When we have real results, we will share them honestly instead of making promises we cannot prove.",
+"Your language|This website already works in English, Kinyarwanda and French, and your choice is remembered when you come back. Language matters because people trust and understand what is written the way they speak.|In the future we hope to support more languages, including Swahili, and to help site owners publish their own pages in several languages. Translations will always need a human to read them before they are published.",
+"Clear, fair pricing|Prices on this site are in Rwandan francs and are examples, not final offers. The idea is to separate one-time costs, such as buying a template, from recurring costs, such as hosting, so that nothing is hidden.|We plan to support mobile money and card payments through trusted providers. Until that is ready, nothing on this site can be bought, and we will never say a payment worked unless the provider has confirmed it.",
+"Security and privacy|Secret keys for AI, translation and payments must stay on a server and never inside the web page. Accounts will use well-known sign-in methods, and each person should only be able to see and change their own projects.|For now, the only information we collect is the name and email you send to join the early-access list. We use it only to contact you about this product and you can ask us to delete it at any time.",
+"The road ahead|The honest roadmap has several steps. First, this public website. Next, accounts and sign-in. Then templates and saving projects, followed by the visual editor, the AI assistant, publishing, and finally payments and an administration area.|We will update this page as each step really becomes available. If you join the early-access list, we will write to you when there is something you can try, and your feedback will help decide what comes next.",
+"Why a globe and a solar system?|The background of this page shows our planet inside the solar system. As you scroll, the view moves away from Earth until you can see the Sun and the planets circling it. It is a reminder that great things begin small and can reach far.|It is a decorative scene, with sizes and distances shortened so everything fits on screen. The planets really do orbit the Sun in roughly the order you see here. Below you can read a few facts about each one."],
+ph:"Meet the planets",pI:"Sizes and distances are not to scale; they are shortened so you can see everything.",
+pn:["Sun|A star that holds about 99.8% of the solar system’s mass. Its light takes a little over 8 minutes to reach Earth.","Mercury|The smallest planet and the closest to the Sun. It has almost no atmosphere.","Venus|The hottest planet, wrapped in thick clouds. A day on Venus is longer than its year.","Earth|Our home and the only place we know with life. About 71% of its surface is water.","Mars|A cold, dusty world with the tallest volcano in the solar system, Olympus Mons.","Jupiter|The largest planet, a gas giant whose Great Red Spot storm is bigger than Earth.","Saturn|Famous for its rings of ice and rock. It has many known moons.","Uranus|An ice giant that spins tilted on its side.","Neptune|The farthest planet: dark, cold and very windy."],
+gB:"Continue with Google",pW:"Password",sI:"Sign in with password",cA:"Create account",fp:"Forgot password?",dv3:"or",nc:"Sign-in is not connected yet. The site owner must add the Firebase configuration before Google or password sign-in can work. Nothing was sent.",pE:"Please enter a password of at least 6 characters.",ok2:"Signed in as ",er2:"Sign-in failed: ",rs:"If an account exists for this email, a reset message has been sent.",wl:"Not ready? Join the early-access list.",sP2:"Sign in with your Google account or with your email and password.",
+fd:"A platform for creating websites and apps across Africa. In development.",dw:"Developed with innovation by",fo:"Founded and developed by",rt:"© 2026 Ikaze Web Builder",sk:"Skip to content",mn:"Menu",lg:"Language"},
+rw:{ti:"Ikaze Web Builder — Hanga ibirenze imbibi. Ubaka ejo hazaza.",de:"Uburyo bwo kubaka imbuga na porogaramu muri Afurika, duhereye mu Rwanda. Biracyategurwa — iyandikishe ku rutonde rw’abazabanza.",
+nav:["Ahabanza","Hanga","Imiterere","Ibiciro","Ibyerekeye","Twandikire","Injira","Ibindi"],mo:["Ibibazo","Amategeko n’amabwiriza","Amabanga","Menyesha ikibazo"],
+bd:"Biracyategurwa · Ntibirabaho",h1:"Hanga ibirenze imbibi. Ubaka ejo hazaza.",ld:"Ikaze Web Builder irategurwa kugira ngo ifashe abantu n’ibigo byo muri Afurika, duhereye mu Rwanda, kubaka imbuga na porogaramu bakoresheje AI, imiterere yateguwe, cyangwa batangiriye ku busa.",
+st:"Uburyo bwo kubaka, konti no kwishyura ntibirabaho. Uru rubuga rugaragaza ibiteganyijwe. Ushobora kwiyandikisha ku rutonde rw’abazabanza.",c1:"Iyandikishe hakiri kare",c2:"Reba imiterere y’igerageza",pl:"Giteganyijwe",
+ft:["Tangirana na AI|Basobanurire igitekerezo cyawe ubone igishushanyo cya mbere.","Tangirana n’imiterere|Hitamo igishushanyo ugihindure icyawe.","Tangirira ku busa|Fungura umwanya utarimo ikintu, wubake uko ushaka."],
+cH:"Hanga",cP:"Hateguwe inzira eshatu zo gutangira. Nta n’imwe irakoreshwa ubu.",cN:"Impamvu bitaraboneka: kwinjira, kubika, gukora na AI no gutangaza bikenera serivisi z’inyuma ziracyashyirwaho.",
+tH:"Isoko ry’imiterere (igerageza)",tP:"Imiterere y’icyitegererezo ifite ibiciro by’urugero. Ni ibyo kwerekana kugeza isoko rifunguwe.",all:"Ibyiciro byose",
+cats:["Ubucuruzi","Ibikorwa byanjye","Iduka rya interineti","Ishuri","Resitora","Umuryango utegamiye kuri leta","Amazu n’ubutaka","Imbonerahamwe"],pv:"Reba",gt:"Saba kubanza",cl:"Funga",fr:"Ubuntu",pd:"Yishyurwa",tf:["Ikoreshwa kuri telefone","Impapuro zo kuzuza","Amafoto"],dn:"Ibyo kwerekana: igishushanyo gikeya, si imiterere ya nyuma.",
+pH:"Ibiciro (by’urugero)",pP:"Ibi byiciro ni iby’urugero kandi bishobora guhinduka mbere yo gutangira. Ibiciro biri mu mafaranga y’u Rwanda (RWF). Nta kintu cyagurwa ubu.",
+tiers:["Ubuntu","Ibanze","Bisanzwe","Bihebuje","Byihariye","Ibigo bikomeye"],ent:"Igiciro gisabwa ukwacyo",
+kH:"Ikigereranyo cy’igiciro",kT:"Icyiciro cy’imiterere",kA:"Gukora urubuga na AI (rimwe, +10,000 RWF)",kE:"Guhindura bihambaye (rimwe, +15,000 RWF)",kM:"Amezi yo kubika urubuga (buri kwezi, 5,000 RWF)",kO:"Ikigereranyo cyo kwishyura rimwe",kR:"Kubika urubuga buri kwezi",kN:"Ni ibigereranyo gusa. Nta kwishyura gushoboka kuri uru rubuga.",
+aH:"Ibyerekeye Ikaze Web Builder",aP:"Ikaze Web Builder ni urubuga rwateguwe kugira ngo kubaka imbuga na porogaramu birusheho koroha, guhanga udushya no gukomera.",dv:"Uyikora",dv2:"Uwayishinze akaba n’uyikora",
+mH:"Menya uwayishinze",mP:"Kumenya byinshi kuri Niyibigira Theoneste, shakisha izina rye kuri Google cyangwa usure urubuga rwe.",
+ctH:"Twandikire",ctP:"Hamagara cyangwa wandikire Ikaze Digital:",ctN:"Instagram na LinkedIn: shakisha “Ikaze Digital”. Hazashyirwaho imiyoboro yemejwe.",
+sH:"Injira",sP:"Kwinjira, kwinjira na Google na konti ntibirabaho. Bikenera ko Firebase itunganywa. Shyiramo amakuru yawe tukumenyeshe igihe konti zifunguriwe.",
+jN:"Amazina yawe",jE:"Imeri",jS:"Iyandikishe hakiri kare",eN:"Andika amazina yawe.",eE:"Andika imeri nyayo.",ok:"Porogaramu yawe ya imeri irafunguwe ifite ubutumwa bwiteguye. Kanda kohereza urangize — ntuba uri ku rutonde kugeza tubwakiriye.",
+fq:["Nshobora kubaka urubuga ubu?|Oya. Uburyo bwo kubaka buracyategurwa.","Ibiciro ni ibya nyuma?|Oya. Ni iby’urugero kandi bishobora guhinduka mbere yo gutangira.","Nshobora kwishyura kuri uru rubuga?|Oya. Nta kwishyura gushoboka ubu."],
+tm:["Amategeko n’amabwiriza","Uru rubuga ni urwo gutanga amakuru. Uburyo bwo kubaka, konti, imiterere n’ibiciro biracyategurwa kandi ntibirabaho.","Ibiranga, ibiciro n’uburyo bwo kwishyura biteganyijwe bishobora guhinduka mbere yo gutangira.","Kwiyandikisha ku rutonde si ukugura, kandi ntibikwizeza ko uzabona uburyo."],
+pc:["Politiki y’amabanga","Dukusanya gusa izina na imeri utwoherereza kugira ngo wiyandikishe ku rutonde.","Tubikoresha gusa kugira ngo tukumenyeshe iby’Ikaze Web Builder. Ntitugurisha amakuru yawe.","Gusaba ko dusiba amakuru yawe, andikira ikazedigital@gmail.com."],
+rt2:"Manuka usome inkuru yose — hafi iminota 5.",
+ls:["Impamvu Ikaze Web Builder ibaho|Ku bacuruzi benshi bato, abahanzi, amashuri n’amatsinda yo muri Afurika, kugira urubuga rwiza biracyasa n’ibigoye. Gukodesha umuhanga bishobora kugura menshi, ibikoresho by’ubuntu bishobora kuvuruguta, kandi byinshi ntibyateguriwe ibyo dukeneye, indimi zacu n’uburyo bwacu bwo kwishyura.|Ikaze Web Builder ishingiye ku kwizera koroheje: niba ushobora gusobanura ibyo ukora, ugomba kubigaragariza isi. Turimo kubaka igikoresho kigamije kugabanya urwo rugendo, kurworoshya no kurugira ruhendutse, duhereye mu Rwanda.",
+"Inzira eshatu zo gutangira|Intego ni uko watangira mu buryo bukunogeye. Washobora gusobanura igitekerezo cyawe mu magambo yawe ukabona igishushanyo cya mbere, ugahitamo imiterere yateguwe ukayihindura, cyangwa ugafungura urupapuro rutarimo ikintu ukiyubakira byose.|Nta nzira n’imwe irabaho ubu, ariko igitekerezo kiri inyuma yazo zose ni kimwe: ni wowe ugenzura. Igishushanyo, imiterere cyangwa urupapuro rwera ni intangiriro gusa, kandi byose bigomba kuguma biri mu bubasha bwawe bwo kubihindura.",
+"Uko AI iteganyijwe gufasha|AI iteganyijwe kuba umufasha, ntiyasimbura ubushishozi bwawe. Wasobanura ubucuruzi, nk’iduka ry’imyenda i Kigali, maze igikoresho kigatanga inama z’impapuro, imitwe y’ibiganiro n’amagambo, ukabyemera, ukabihindura cyangwa ukabireka.|Dushaka ko kivuga ukuri ku byo gikora. Ibishushanyo bya AI bishobora kuba birimo amakosa, bityo ugomba gusoma, gukosora no kugira inyandiko iyawe mbere yo kuyereka abakiriya. Ibikoresho bya AI bishingira ku sano ry’umutekano na seriveri riracyategurwa.",
+"Imiterere ijyanye n’ibikenewe|Hateguwe isoko ry’imiterere rifite ibishushanyo by’ubucuruzi, ibikorwa by’abahanzi, amaduka ya interineti, amashuri, amavuriro, resitora, amahoteli, amatorero, imiryango itegamiye kuri leta, amazu n’ubutaka, amakuru, ibinyamakuru by’ibitekerezo, umuziki, ibigo by’ubujyanama, impapuro zo kwamamaza, imbonerahamwe n’urubuga rwo kwiga.|Imiterere ubona kuri uru rubuga ni ibishushanyo by’igerageza bifite ibiciro by’urugero. Isoko nirifungurwa, buri miterere izerekana uko isa, ibyo ifite, niba ikora neza kuri telefone, n’igiciro kigaragara mu mafaranga y’u Rwanda mbere y’uko ufata icyemezo.",
+"Birenze imbuga|Uretse imbuga, turashaka gushyigikira porogaramu zoroheje za interineti: impapuro zo gufata gahunda, ibikoresho byo gukurikirana ibicuruzwa, ibitabo by’amashuri, urutonde ruto rw’abakiriya n’imbonerahamwe. Ibigo byinshi bikeneye ibi bikoresho ariko ntibishobora kwishyura porogaramu zihariye.|Iyi ni intego y’igihe kirekire. Porogaramu zikenera ububiko bw’amakuru, konti n’umutekano witondewe, bityo zizaza nyuma y’uko ibikoresho by’imbuga bimaze gukora neza. Dukunda gutangiza bike bikora kuruta byinshi bisa neza gusa.",
+"Yubakiwe telefone n’interineti isanzwe|Abantu benshi mu karere kacu bagera kuri interineti bakoresheje telefone, akenshi bafite megabayiti nke. Ni cyo gituma igishushanyo gitangirira kuri telefone, kandi dushaka impapuro zoroheje zifungura vuba.|Ntitugaragaza imibare y’umuvuduko kuko nta gicuruzwa cyuzuye turapima. Nitubona ibisubizo nyabyo, tuzabigaragaza tuvuga ukuri, aho gutanga amasezerano tudashobora kwerekana.",
+"Ururimi rwawe|Uru rubuga rusanzwe rukora mu Cyongereza, Ikinyarwanda n’Igifaransa, kandi ibyo wahisemo birabikwa nugaruka. Ururimi ni ingenzi kuko abantu bizera kandi bumva ibyanditse uko bavuga.|Mu gihe kizaza turizera gushyigikira izindi ndimi, harimo Igiswahili, no gufasha abafite imbuga gutangaza impapuro zabo mu ndimi nyinshi. Ibisobanuro bizahora bikenera umuntu ubisoma mbere y’uko bitangazwa.",
+"Ibiciro bisobanutse kandi bihwanye|Ibiciro kuri uru rubuga biri mu mafaranga y’u Rwanda kandi ni ingero, si ibitangwa bya nyuma. Igitekerezo ni ugutandukanya ibyishyurwa rimwe, nko kugura imiterere, n’ibyishyurwa buri gihe, nko kubika urubuga, kugira ngo nta kintu gihishwa.|Turateganya gushyigikira kwishyura kuri telefone no ku makarita binyuze ku bafatanyabikorwa bizewe. Kugeza byiteguye, nta kintu cyagurwa kuri uru rubuga, kandi ntituzigera tuvuga ko kwishyura byagenze neza keretse uwabigenzaga abyemeje.",
+"Umutekano n’amabanga|Imfunguzo z’ibanga za AI, guhindura indimi no kwishyura zigomba kuguma kuri seriveri, ntizigere mu rupapuro rw’urubuga. Konti zizakoresha uburyo bwo kwinjira buzwi, kandi buri muntu agomba kubona no guhindura imishinga ye gusa.|Ubu, amakuru yonyine dukusanya ni izina na imeri utwoherereza kugira ngo wiyandikishe ku rutonde rw’abazabanza. Tuyakoresha gusa kugira ngo tukumenyeshe iby’iki gicuruzwa, kandi ushobora gusaba ko tuyasiba igihe cyose.",
+"Inzira iri imbere|Gahunda y’ukuri ifite intambwe nyinshi. Mbere, uru rubuga rusanzwe. Hakurikireho konti no kwinjira. Hanyuma imiterere no kubika imishinga, hagakurikiraho uburyo bwo guhindura ubyirebera, umufasha wa AI, gutangaza, amaherezo kwishyura n’agace k’ubuyobozi.|Tuzavugurura uru rupapuro igihe buri ntambwe izaba ibonetse koko. Nuyandikisha ku rutonde rw’abazabanza, tuzakwandikira nihaba hari icyo ugerageza, kandi ibitekerezo byawe bizadufasha guhitamo ibizakurikiraho.",
+"Kuki Isi na sisitemu y’izuba?|Inyuma y’uru rupapuro hagaragara umubumbe wacu uri muri sisitemu y’izuba. Uko umanuka, ishusho igenda iva ku Isi kugeza ubonye Izuba n’imibumbe ruzengurutse. Ni urwibutso ko ibikomeye bitangira ari bito ariko bishobora kugera kure.|Ni ishusho yo gushimisha gusa, ingano n’intera byagabanyijwe kugira ngo byose bigaragare kuri ekara. Imibumbe koko izenguruka Izuba mu murongo ugereranye n’uwo ubona hano. Hepfo ushobora gusoma ibintu bike kuri buri umwe."],
+ph:"Menya imibumbe",pI:"Ingano n’intera ntibijyanye n’ukuri; byagabanyijwe kugira ngo ubone byose.",
+pn:["Izuba|Inyenyeri ifite hafi 99.8% by’ibiremereye byose bya sisitemu y’izuba. Urumuri rwayo rumara iminota irenga umunani rugera ku Isi.","Merikuri|Umubumbe muto kurusha indi kandi uri hafi y’Izuba. Nta kirere cyinshi ufite.","Venusi|Umubumbe ushyushye kurusha indi, upfutse n’ibicu binini. Umunsi kuri Venusi urenze umwaka wayo.","Isi|Urugo rwacu, ahantu honyine tuzi hari ubuzima. Hafi 71% by’ubuso bwayo ni amazi.","Marsi|Umubumbe ukonje kandi wuzuye umukungugu, ufite ikirunga kirekire kurusha ibindi muri sisitemu y’izuba, Olympus Mons.","Jupiteri|Umubumbe munini kurusha indi, ufite umuyaga ukomeye (Ahantu Hatukura Hanini) urenze Isi.","Saturni|Uzwiho impeta z’urubura n’amabuye. Ufite ibyogajuru byinshi bizwi.","Uranusi|Umubumbe w’urubura uzenguruka wegamye ku ruhande.","Neputuni|Umubumbe uri kure kurusha indi, wijimye, ukonje kandi ufite umuyaga mwinshi."],
+gB:"Komeza na Google",pW:"Ijambobanga",sI:"Injira ukoresheje ijambobanga",cA:"Fungura konti",fp:"Wibagiwe ijambobanga?",dv3:"cyangwa",nc:"Kwinjira ntibirahuzwa. Nyiri urubuga agomba kongeramo iboneza rya Firebase mbere y’uko kwinjira na Google cyangwa ijambobanga bikora. Nta kintu cyoherejwe.",pE:"Andika ijambobanga rigizwe nibura n’inyuguti 6.",ok2:"Winjiye nka ",er2:"Kwinjira byanze: ",rs:"Niba konti ihari kuri iyi imeri, ubutumwa bwo guhindura ijambobanga bwoherejwe.",wl:"Utiteguye? Iyandikishe ku rutonde rw’abazabanza.",sP2:"Injira ukoresheje konti yawe ya Google cyangwa imeri n’ijambobanga.",
+fd:"Urubuga rwo kubaka imbuga na porogaramu muri Afurika. Biracyategurwa.",dw:"Yakozwe mu buryo bw’udushya na",fo:"Yashinzwe kandi ikorwa na",rt:"© 2026 Ikaze Web Builder",sk:"Simbukira ku nyandiko",mn:"Menu",lg:"Ururimi"},
+fr:{ti:"Ikaze Web Builder — Créez sans limites. Construisez l’avenir.",de:"Un créateur de sites et d’applications pour l’Afrique, à commencer par le Rwanda. En développement — inscrivez-vous à la liste d’accès anticipé.",
+nav:["Accueil","Créer","Modèles","Tarifs","À propos","Contact","Connexion","Plus"],mo:["FAQ","Conditions générales","Politique de confidentialité","Signaler un problème"],
+bd:"En développement · Pas encore disponible",h1:"Créez sans limites. Construisez l’avenir.",ld:"Ikaze Web Builder est conçu pour aider les personnes et organisations d’Afrique, à commencer par le Rwanda, à créer des sites et des applications web avec l’IA, des modèles ou une page blanche.",
+st:"Le créateur, les comptes et les paiements ne sont pas encore en ligne. Ce site présente ce qui est prévu. Vous pouvez rejoindre la liste d’accès anticipé.",c1:"Rejoindre l’accès anticipé",c2:"Parcourir les modèles de démo",pl:"Prévu",
+ft:["Commencer avec l’IA|Décrivez votre idée et obtenez une première ébauche.","Commencer avec un modèle|Choisissez un design et personnalisez-le.","Partir de zéro|Ouvrez un espace vierge et construisez librement."],
+cH:"Créer",cP:"Trois façons de commencer sont prévues. Aucune n’est utilisable pour l’instant.",cN:"Pourquoi pas encore : la connexion, la sauvegarde, la génération par IA et la publication nécessitent des services serveur encore en cours de mise en place.",
+tH:"Marché de modèles (démo)",tP:"Modèles d’exemple avec des prix indicatifs. Contenu de démonstration jusqu’à l’ouverture du marché.",all:"Toutes les catégories",
+cats:["Entreprise","Portfolio","Boutique en ligne","École","Restaurant","ONG","Immobilier","Tableau de bord"],pv:"Aperçu",gt:"Demander l’accès anticipé",cl:"Fermer",fr:"Gratuit",pd:"Payant",tf:["Adaptatif","Formulaires","Galerie"],dn:"Contenu de démo : un croquis, pas le modèle final.",
+pH:"Tarifs (indicatifs)",pP:"Ces paliers sont indicatifs et peuvent changer avant le lancement. Les prix sont en francs rwandais (RWF). Rien ne peut être acheté pour l’instant.",
+tiers:["Gratuit","Basique","Standard","Premium","Professionnel","Entreprise"],ent:"Tarif sur mesure",
+kH:"Estimateur de coût",kT:"Palier du modèle",kA:"Génération de site par IA (unique, +10 000 RWF)",kE:"Édition avancée (unique, +15 000 RWF)",kM:"Mois d’hébergement (récurrent, 5 000 RWF par mois)",kO:"Estimation unique",kR:"Hébergement récurrent",kN:"Estimations uniquement. Aucun paiement n’est possible sur ce site.",
+aH:"À propos d’Ikaze Web Builder",aP:"Ikaze Web Builder est une plateforme numérique conçue pour rendre la création de sites et d’applications plus accessible, créative et puissante.",dv:"Développeur",dv2:"Fondateur et développeur",
+mH:"Rencontrez le fondateur",mP:"Pour en savoir plus sur Niyibigira Theoneste, cherchez son nom sur Google ou visitez son site.",
+ctH:"Contact",ctP:"Joindre Ikaze Digital :",ctN:"Instagram et LinkedIn : cherchez « Ikaze Digital ». Les liens de profil vérifiés seront ajoutés.",
+sH:"Connexion",sP:"La connexion, Google et les comptes ne sont pas encore disponibles. Ils nécessitent la configuration de Firebase. Laissez vos coordonnées pour être prévenu à l’ouverture des comptes.",
+jN:"Votre nom",jE:"Adresse e-mail",jS:"Rejoindre l’accès anticipé",eN:"Veuillez saisir votre nom.",eE:"Veuillez saisir une adresse e-mail valide.",ok:"Votre application e-mail s’est ouverte avec un message prêt. Appuyez sur envoyer pour finaliser — vous n’êtes pas inscrit tant que nous ne l’avons pas reçu.",
+fq:["Puis-je créer un site maintenant ?|Pas encore. Le créateur est en développement.","Les prix sont-ils définitifs ?|Non. Ils sont indicatifs et peuvent changer avant le lancement.","Puis-je payer sur ce site ?|Non. Aucun paiement n’est possible pour l’instant."],
+tm:["Conditions générales","Ce site est informatif. Le créateur, les comptes, les modèles et les prix sont en développement et pas encore disponibles.","Les fonctionnalités, prix et moyens de paiement prévus peuvent changer avant le lancement.","S’inscrire à la liste d’accès anticipé n’est pas un achat et ne garantit pas l’accès."],
+pc:["Politique de confidentialité","Nous collectons uniquement le nom et l’adresse e-mail que vous nous envoyez pour rejoindre la liste d’accès anticipé.","Nous les utilisons uniquement pour vous contacter au sujet d’Ikaze Web Builder. Nous ne vendons pas vos données.","Pour demander la suppression de vos données, écrivez à ikazedigital@gmail.com."],
+rt2:"Faites défiler pour lire toute l’histoire — environ 5 minutes.",
+ls:["Pourquoi Ikaze Web Builder existe|Pour de nombreuses petites entreprises, créateurs, écoles et associations d’Afrique, avoir un bon site semble encore hors de portée. Engager un développeur coûte cher, les outils gratuits peuvent être déroutants, et beaucoup ne sont pas pensés pour nos besoins, nos langues ou nos habitudes de paiement.|Ikaze Web Builder part d’une conviction simple : si vous savez décrire ce que vous faites, vous devriez pouvoir le montrer au monde. Nous construisons un outil qui cherche à rendre cette étape plus courte, plus claire et plus abordable, en commençant par le Rwanda.",
+"Trois façons de commencer|L’idée est de vous laisser démarrer comme vous le préférez : décrire votre projet avec vos propres mots pour obtenir une première ébauche, choisir un modèle prêt à l’emploi et le modifier, ou ouvrir une page blanche et tout construire vous-même.|Aucune de ces voies n’existe encore, mais le principe est le même : vous gardez le contrôle. Une ébauche, un modèle ou une page blanche ne sont que des points de départ, et tout doit rester modifiable par vous.",
+"Comment l’IA doit aider|L’IA est prévue comme un assistant, pas comme un remplaçant de votre jugement. Vous décririez une activité, par exemple un atelier de couture à Kigali, et l’outil proposerait des pages, des titres et des textes que vous pourriez accepter, modifier ou jeter.|Nous voulons être honnêtes sur ce qu’elle fait. Les ébauches peuvent contenir des erreurs : relisez, corrigez et adaptez toujours le texte avant de le montrer à vos clients. Les fonctions d’IA dépendent d’une connexion serveur sécurisée encore en préparation.",
+"Des modèles pour de vrais besoins|Un marché de modèles est prévu, avec des designs pour entreprises, portfolios, boutiques en ligne, écoles, hôpitaux, restaurants, hôtels, églises, ONG, immobilier, actualités, blogs, musique, agences, pages d’atterrissage, tableaux de bord et plateformes d’apprentissage.|Les modèles de ce site sont des croquis de démonstration avec des prix d’exemple. À l’ouverture du marché, chacun devrait afficher un aperçu, ses fonctions, son adaptation aux téléphones et un prix clair en francs rwandais avant votre décision.",
+"Plus que des sites web|Au-delà des sites, nous voulons prendre en charge de simples applications web : pages de réservation, suivi de stock, dossiers scolaires, petits fichiers clients et tableaux de bord. Beaucoup d’organisations ont besoin de ces outils sans pouvoir financer un logiciel sur mesure.|C’est un objectif à long terme. Les applications exigent des bases de données, des comptes et une sécurité rigoureuse ; elles viendront donc après les outils de sites. Nous préférons lancer peu de choses qui fonctionnent plutôt que beaucoup de choses qui n’ont que l’apparence.",
+"Pensé pour les téléphones et les vraies connexions|La plupart des gens de notre région accèdent à Internet depuis un téléphone, souvent avec un forfait de données limité. C’est pourquoi la conception part du mobile et vise des pages légères qui se chargent vite.|Nous ne publions pas de chiffres de vitesse, car nous n’avons pas encore mesuré un produit terminé. Quand nous aurons de vrais résultats, nous les partagerons honnêtement plutôt que de faire des promesses invérifiables.",
+"Votre langue|Ce site fonctionne déjà en anglais, en kinyarwanda et en français, et votre choix est mémorisé à votre retour. La langue compte, car on fait confiance à ce qui est écrit comme on le parle et on le comprend mieux.|À l’avenir, nous espérons prendre en charge d’autres langues, dont le swahili, et aider les propriétaires de sites à publier leurs pages en plusieurs langues. Les traductions devront toujours être relues par une personne avant publication.",
+"Des prix clairs et justes|Les prix de ce site sont en francs rwandais et sont des exemples, pas des offres finales. L’idée est de séparer les coûts uniques, comme l’achat d’un modèle, des coûts récurrents, comme l’hébergement, afin que rien ne soit caché.|Nous prévoyons de prendre en charge le mobile money et les cartes via des prestataires de confiance. D’ici là, rien ne peut être acheté sur ce site, et nous ne dirons jamais qu’un paiement a réussi sans confirmation du prestataire.",
+"Sécurité et confidentialité|Les clés secrètes pour l’IA, la traduction et les paiements doivent rester sur un serveur, jamais dans la page web. Les comptes utiliseront des méthodes de connexion reconnues, et chacun ne devrait pouvoir voir et modifier que ses propres projets.|Pour l’instant, nous ne recueillons que le nom et l’e-mail que vous envoyez pour rejoindre la liste d’accès anticipé. Nous les utilisons uniquement pour vous parler de ce produit, et vous pouvez demander leur suppression à tout moment.",
+"La suite|La feuille de route honnête comporte plusieurs étapes. D’abord ce site public. Ensuite les comptes et la connexion. Puis les modèles et la sauvegarde des projets, suivis de l’éditeur visuel, de l’assistant IA, de la publication, et enfin des paiements et d’un espace d’administration.|Nous mettrons cette page à jour à mesure que chaque étape sera réellement disponible. Si vous rejoignez la liste d’accès anticipé, nous vous écrirons dès qu’il y aura quelque chose à essayer, et vos retours aideront à décider de la suite.",
+"Pourquoi un globe et un système solaire ?|L’arrière-plan de cette page montre notre planète au sein du système solaire. En faisant défiler, la vue s’éloigne de la Terre jusqu’à laisser voir le Soleil et les planètes qui gravitent autour. C’est un rappel : les grandes choses naissent petites et peuvent aller loin.|C’est une scène décorative, dont les tailles et les distances sont raccourcies pour tout faire tenir à l’écran. Les planètes tournent bien autour du Soleil dans l’ordre que vous voyez ici. Vous pouvez lire ci-dessous quelques faits sur chacune."],
+ph:"Faites connaissance avec les planètes",pI:"Tailles et distances non à l’échelle : elles sont raccourcies pour tout montrer.",
+pn:["Soleil|Une étoile qui concentre environ 99,8 % de la masse du système solaire. Sa lumière met un peu plus de 8 minutes à atteindre la Terre.","Mercure|La plus petite planète et la plus proche du Soleil. Elle n’a presque pas d’atmosphère.","Vénus|La planète la plus chaude, enveloppée de nuages épais. Un jour y dure plus longtemps qu’une année.","Terre|Notre foyer et le seul endroit connu abritant la vie. Environ 71 % de sa surface est couverte d’eau.","Mars|Un monde froid et poussiéreux, avec le plus haut volcan du système solaire, Olympus Mons.","Jupiter|La plus grande planète, une géante gazeuse dont la Grande Tache rouge est plus large que la Terre.","Saturne|Célèbre pour ses anneaux de glace et de roche. Elle possède de nombreuses lunes connues.","Uranus|Une géante de glace qui tourne couchée sur le côté.","Neptune|La planète la plus lointaine, sombre, froide et très venteuse."],
+gB:"Continuer avec Google",pW:"Mot de passe",sI:"Se connecter avec le mot de passe",cA:"Créer un compte",fp:"Mot de passe oublié ?",dv3:"ou",nc:"La connexion n’est pas encore branchée. Le propriétaire du site doit ajouter la configuration Firebase pour que Google ou le mot de passe fonctionnent. Rien n’a été envoyé.",pE:"Veuillez saisir un mot de passe d’au moins 6 caractères.",ok2:"Connecté en tant que ",er2:"Échec de la connexion : ",rs:"Si un compte existe pour cet e-mail, un message de réinitialisation a été envoyé.",wl:"Pas prêt ? Rejoignez la liste d’accès anticipé.",sP2:"Connectez-vous avec votre compte Google ou avec votre e-mail et mot de passe.",
+fd:"Une plateforme pour créer des sites et applications en Afrique. En développement.",dw:"Développé avec innovation par",fo:"Fondé et développé par",rt:"© 2026 Ikaze Web Builder",sk:"Aller au contenu",mn:"Menu",lg:"Langue"}
+};
+var IK="https://ikaze-digital.vercel.app/",NT="https://theonesteniyibigira6-hue.github.io/NIYIBIGIRA-/",EM="ikazedigital@gmail.com";
+var RT=["home","create","templates","pricing","about","contact","signin"],MR=["faq","terms","privacy"],L="en",R="home",cat=-1,$=function(i){return document.getElementById(i)};
+try{var s=localStorage.getItem("ikaze-lang");if(D[s])L=s;else{var b=(navigator.language||"en").slice(0,2);if(D[b])L=b}}catch(e){var b2=(navigator.language||"en").slice(0,2);if(D[b2])L=b2}
+function E(t,c,x,a){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;if(a)for(var k in a)e.setAttribute(k,a[k]);return e}
+function A(h,x,ext,c){var a=E("a",c,x,{href:h});if(ext){a.target="_blank";a.rel="noopener"}return a}
+function add(p){for(var i=1;i<arguments.length;i++)p.appendChild(arguments[i]);return p}
+function fm(n){return n.toLocaleString("en-US")}
+function card(t,x,tag){var c=E("div","cd");if(tag)c.appendChild(E("span","tg",tag));add(c,E("h3",0,t),E("p","mu",x));return c}
+var T=[["Kigali Biz",0,0,210],["Folio Dark",1,0,270],["Shop Rise",2,12000,190],["Campus One",3,25000,150],["Taste Hub",4,8000,20],["Hope NGO",5,0,130],["Haven Homes",6,45000,35],["Admin Pulse",7,80000,250]];
+var RG=[[0,0],[5000,15000],[20000,40000],[50000,100000],[120000,200000],null];
+function mock(h){var m=E("div","mk");m.style.setProperty("--h",h);m.setAttribute("aria-hidden","true");return m}
+function form(d){var f=E("form",0,null,{novalidate:""}),l1=E("label"),l2=E("label"),e1=E("span","er"),e2=E("span","er"),i1=E("input"),i2=E("input"),ms=E("div","ok");
+i1.id="nm";i1.type="text";i1.setAttribute("autocomplete","name");i2.id="em";i2.type="email";i2.setAttribute("autocomplete","email");
+l1.setAttribute("for","nm");l2.setAttribute("for","em");ms.setAttribute("role","status");ms.hidden=true;
+add(l1,E("span",0,d.jN),i1,e1);add(l2,E("span",0,d.jE),i2,e2);
+var b=E("button","btn",d.jS,{type:"submit"});add(f,l1,l2,b,ms);
+f.onsubmit=function(ev){ev.preventDefault();e1.textContent=e2.textContent="";ms.hidden=true;var n=i1.value.trim(),m=i2.value.trim(),ok=true;
+if(!n){e1.textContent=d.eN;ok=false}if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(m)){e2.textContent=d.eE;ok=false}
+if(!ok){(e1.textContent?i1:i2).focus();return}
+ms.textContent=d.ok;ms.hidden=false;
+location.href="mailto:"+EM+"?subject="+encodeURIComponent("Early access — Ikaze Web Builder")+"&body="+encodeURIComponent("Name: "+n+"\nEmail: "+m+"\nLanguage: "+L.toUpperCase()+"\n\nPlease add me to the Ikaze Web Builder early-access list.")};
+return f}
+function legal(a){var s=E("section");s.appendChild(E("h1",0,a[0]));a.slice(1).forEach(function(x){s.appendChild(E("p",0,x))});return s}
+var FB=null; /* Site owner: paste the Firebase web config here, e.g. {apiKey:"...",authDomain:"...",projectId:"...",appId:"..."} */
+function fbLoad(cb){if(!FB)return cb(false);if(window.firebase&&firebase.apps&&firebase.apps.length)return cb(true);var u=["app","auth"],i=0;(function n(){if(i==u.length){try{firebase.initializeApp(FB)}catch(e){return cb(false)}return cb(true)}var sc=document.createElement("script");sc.src="https://www.gstatic.com/firebasejs/10.12.2/firebase-"+u[i++]+"-compat.js";sc.onload=n;sc.onerror=function(){cb(false)};document.head.appendChild(sc)})()}
+function story(m,d){d.ls.forEach(function(x,i){var p=x.split("|"),c=E("section","cd lg3");c.appendChild(E("h2",0,(i+1)+". "+p[0]));p.slice(1).forEach(function(t){c.appendChild(E("p",0,t))});m.appendChild(c)});
+var h=E("section","cd lg3");add(h,E("h2",0,d.ph),E("p",0,d.pI));var g=E("div","grid");d.pn.forEach(function(x){var p=x.split("|");g.appendChild(card(p[0],p[1]))});h.appendChild(g);m.appendChild(h);
+var f=E("section","cd lg3"),a=E("p"),b=E("p");add(a,E("span",0,d.dv+": "),A(IK,"IKAZE DIGITAL",1));add(b,E("span",0,d.dv2+": "),A(NT,"NIYIBIGIRA THEONESTE",1));add(f,E("h2",0,d.mH),E("p",0,d.mP),a,b,add(E("div","row"),A("#signin",d.c1,0,"btn")));m.appendChild(f)}
+var V={
+home:function(m,d){var s=E("section","hero");add(s,E("span","bd2",d.bd),E("h1",0,d.h1),E("p","lead",d.ld),E("p","mu",d.rt2),add(E("div","st"),E("strong",0,d.st)),add(E("div","row"),A("#signin",d.c1,0,"btn"),A("#templates",d.c2,0,"btn g2")));
+var g=E("div","grid");d.ft.forEach(function(x){var p=x.split("|");g.appendChild(card(p[0],p[1],d.pl))});add(m,s,g);story(m,d)},
+create:function(m,d){var g=E("div","grid");d.ft.forEach(function(x){var p=x.split("|");g.appendChild(card(p[0],p[1],d.pl))});
+add(m,E("h1",0,d.cH),E("p","lead",d.cP),g,add(E("div","st"),d.cN),add(E("div","row"),A("#signin",d.c1,0,"btn")))},
+templates:function(m,d){var l=E("label",0,d.all.slice(0,0)),sel=E("select",0,null,{id:"cs"}),g=E("div","grid");
+l.setAttribute("for","cs");l.textContent=d.all;sel.appendChild(E("option",0,d.all,{value:"-1"}));d.cats.forEach(function(c,i){sel.appendChild(E("option",0,c,{value:i}))});sel.value=cat;
+sel.onchange=function(){cat=+sel.value;render()};
+T.forEach(function(t){if(cat>=0&&t[1]!=cat)return;var c=E("div","cd");c.appendChild(mock(t[3]));
+add(c,E("h3",0,t[0]),E("span","pill",d.cats[t[1]]));var u=E("ul","ft");d.tf.forEach(function(f){u.appendChild(E("li",0,f))});c.appendChild(u);
+add(c,E("div","pr",t[2]?"RWF "+fm(t[2]):"RWF 0"),E("span","pill",t[2]?d.pd:d.fr));
+var r=E("div","row"),pb=E("button","btn g2",d.pv,{type:"button"});pb.onclick=function(){$("dt").textContent=t[0];$("db").textContent="";var x=mock(t[3]);x.style.height="min(260px,45vw)";$("db").appendChild(x);$("dn").textContent=d.dn;$("dc").textContent=d.cl;$("dg").showModal()};
+add(r,pb,A("mailto:"+EM+"?subject="+encodeURIComponent("Early access — "+t[0]),d.gt,0,"btn"));c.appendChild(r);g.appendChild(c)});
+add(m,E("h1",0,d.tH),E("p","lead",d.tP),l,sel,g)},
+pricing:function(m,d){var g=E("div","grid");d.tiers.forEach(function(n,i){var c=E("div","cd"),r=RG[i];add(c,E("span","tg",d.pl),E("h3",0,n),E("div","pr",r?(r[1]?"RWF "+fm(r[0])+" – "+fm(r[1]):"RWF 0"):d.ent));g.appendChild(c)});
+var k=E("div","cd");k.appendChild(E("h2",0,d.kH));
+var ls=E("label",0,d.kT,{"for":"kt"}),st=E("select",0,null,{id:"kt"});for(var i=0;i<5;i++){var r=RG[i];st.appendChild(E("option",0,d.tiers[i]+" ("+(r[1]?fm(r[0])+"–"+fm(r[1]):"0")+" RWF)",{value:i}))}
+var ca=E("input",0,null,{type:"checkbox",id:"ka"}),ce=E("input",0,null,{type:"checkbox",id:"ke"}),mo=E("input",0,null,{type:"number",id:"km",min:"0",max:"60",value:"0"});
+var la=E("label","ck"),le=E("label","ck"),lm=E("label",0,d.kM,{"for":"km"});la.setAttribute("for","ka");le.setAttribute("for","ke");add(la,ca,E("span",0,d.kA));add(le,ce,E("span",0,d.kE));
+var out=E("div","ok");out.setAttribute("aria-live","polite");
+function up(){var r=RG[+st.value],x=(ca.checked?10000:0)+(ce.checked?15000:0),n=Math.max(0,Math.min(60,+mo.value||0));out.textContent=d.kO+": RWF "+fm(r[0]+x)+(r[1]!=r[0]?" – "+fm(r[1]+x):"")+" | "+d.kR+": RWF "+fm(n*5000)+" ("+n+" × 5,000)"}
+[st,ca,ce,mo].forEach(function(e){e.oninput=up});up();
+add(k,ls,st,la,le,lm,mo,out,E("p","mu",d.kN));
+add(m,E("h1",0,d.pH),add(E("div","st"),d.pP),g,k)},
+about:function(m,d){var l=E("p");add(l,E("span",0,d.dv+": "),A(IK,"IKAZE DIGITAL",1));var f=E("p");add(f,E("span",0,d.dv2+": "),A(NT,"NIYIBIGIRA THEONESTE",1));
+add(m,E("h1",0,d.aH),E("p","lead",d.aP),l,f,E("h2",0,d.mH),E("p",0,d.mP),add(E("p"),A(NT,NT,1,"wr")))},
+contact:function(m,d){var u=E("ul","wr");var a=E("li");add(a,E("span",0,"Email: "),A("mailto:"+EM,EM));var w=E("li");add(w,E("span",0,"WhatsApp: "),A("https://wa.me/250794204258","+250 794 204 258",1));
+add(u,a,w,E("li",0,"Instagram: Ikaze Digital"),E("li",0,"LinkedIn: Ikaze Digital"));add(m,E("h1",0,d.ctH),E("p",0,d.ctP),u,E("p","mu",d.ctN))},
+signin:function(m,d){
+var gb=E("button","btn g2",d.gB,{type:"button"}),f=E("form",0,null,{novalidate:""}),
+i1=E("input",0,null,{id:"se",type:"email",autocomplete:"email"}),i2=E("input",0,null,{id:"sp",type:"password",autocomplete:"current-password"}),
+l1=E("label"),l2=E("label"),er=E("div","er",null,{role:"alert"}),ms=E("div","ok",null,{role:"status"}),
+b1=E("button","btn",d.sI,{type:"submit"}),b2=E("button","btn g2",d.cA,{type:"button"}),b3=E("button","btn g2",d.fp,{type:"button"});
+l1.setAttribute("for","se");l2.setAttribute("for","sp");ms.hidden=true;add(l1,E("span",0,d.jE),i1);add(l2,E("span",0,d.pW),i2);
+function go(fn,okMsg){er.textContent="";ms.hidden=true;fbLoad(function(ok){if(!ok){er.textContent=d.nc;return}fn(firebase.auth()).then(function(r){ms.textContent=okMsg||(d.ok2+((r&&r.user&&r.user.email)||""));ms.hidden=false}).catch(function(e){er.textContent=d.er2+(e.message||"")})})}
+function chk(pw){var e=i1.value.trim(),p=i2.value;if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e)){er.textContent=d.eE;i1.focus();return null}if(pw&&p.length<6){er.textContent=d.pE;i2.focus();return null}return[e,p]}
+gb.onclick=function(){go(function(a){return a.signInWithPopup(new firebase.auth.GoogleAuthProvider())})};
+f.onsubmit=function(ev){ev.preventDefault();er.textContent="";var c=chk(1);if(c)go(function(a){return a.signInWithEmailAndPassword(c[0],c[1])})};
+b2.onclick=function(){er.textContent="";var c=chk(1);if(c)go(function(a){return a.createUserWithEmailAndPassword(c[0],c[1])})};
+b3.onclick=function(){er.textContent="";var c=chk(0);if(c)go(function(a){return a.sendPasswordResetEmail(c[0])},d.rs)};
+add(f,l1,l2,er,add(E("div","row"),b1,b2,b3),ms);
+var w=E("div","cd");w.style.maxWidth="460px";add(w,gb,E("p","mu",d.dv3),f);
+var jw=E("div");jw.style.marginTop="2rem";add(jw,E("h2",0,d.wl),form(d));
+add(m,E("h1",0,d.sH),E("p","lead",d.sP2),add(E("div","st"),d.sP),w,jw)},
+
+faq:function(m,d){m.appendChild(E("h1",0,d.mo[0]));d.fq.forEach(function(x){var p=x.split("|"),e=E("details");add(e,E("summary",0,p[0]),E("p",0,p[1]));m.appendChild(e)})},
+terms:function(m,d){m.appendChild(legal(d.tm))},privacy:function(m,d){m.appendChild(legal(d.pc))}};
+function nav(d){var n=$("nv"),ul=E("ul");n.textContent="";
+RT.forEach(function(r,i){var li=E("li"),a=A("#"+r,d.nav[i]);if(r==R)a.setAttribute("aria-current","page");ul.appendChild(add(li,a))});
+var dd=E("li","dd"),bt=E("button","mr",d.nav[7]+" ▾",{type:"button","aria-expanded":"false"}),sb=E("ul","sub");
+MR.forEach(function(r,i){var a=A("#"+r,d.mo[i]);if(r==R)a.setAttribute("aria-current","page");sb.appendChild(add(E("li"),a))});
+sb.appendChild(add(E("li"),A("mailto:"+EM+"?subject="+encodeURIComponent("Report a problem — Ikaze Web Builder"),d.mo[3])));
+bt.onclick=function(e){e.stopPropagation();var o=sb.classList.toggle("o");bt.setAttribute("aria-expanded",o)};
+add(dd,bt,sb);ul.appendChild(dd);n.appendChild(ul)}
+function foot(d){var f=$("ft");f.textContent="";var g=E("div","fg"),c1=E("div"),c2=E("div"),c3=E("div");
+add(c1,E("strong",0,"IKAZE WEB BUILDER"),E("p","mu",d.fd));
+RT.slice(0,4).forEach(function(r,i){c2.appendChild(A("#"+r,d.nav[i]));c2.appendChild(E("br"))});
+add(c3,A("mailto:"+EM,EM,0,"wr"),E("br"),A("https://wa.me/250794204258","WhatsApp +250 794 204 258",1),E("br"),A("#terms",d.mo[1]),E("br"),A("#privacy",d.mo[2]));
+add(g,c1,c2,c3);var cr=E("div","cr"),p1=E("p"),p2=E("p");
+add(p1,E("span",0,d.dw+" "),A(IK,"IKAZE DIGITAL",1));add(p2,E("span",0,d.fo+" "),A(NT,"NIYIBIGIRA THEONESTE",1));
+add(cr,p1,p2,E("p",0,d.rt));add(f,g,cr)}
+function route(){var h=location.hash.slice(1);R=V[h]?h:"home"}
+function render(){var d=D[L];route();document.documentElement.lang=L;
+var m=$("main");m.textContent="";V[R](m,d);nav(d);foot(d);
+var ix=RT.indexOf(R),nm=ix>=0?d.nav[ix]:(MR.indexOf(R)>=0?d.mo[MR.indexOf(R)]:"");
+document.title=R=="home"?d.ti:nm+" — Ikaze Web Builder";document.querySelector('meta[name=description]').setAttribute("content",d.de);
+$("sk").textContent=d.sk;$("lg").textContent=d.lg;$("mb").textContent=d.mn;$("ls").value=L;$("dc").textContent=d.cl}
+$("ls").onchange=function(){L=this.value;try{localStorage.setItem("ikaze-lang",L)}catch(e){}render()};
+$("mb").onclick=function(){var o=$("nv").classList.toggle("o");this.setAttribute("aria-expanded",o)};
+$("nv").onclick=function(e){if(e.target.tagName=="A"){$("nv").classList.remove("o");$("mb").setAttribute("aria-expanded","false")}};
+document.onclick=function(){var s=document.querySelector(".sub.o");if(s)s.classList.remove("o")};
+$("dc").onclick=function(){$("dg").close()};
+window.addEventListener("hashchange",function(){render();window.scrollTo(0,0)});
+render();
+
+/* Cosmic 3D background: Earth + full solar system */
+(function(){
+var cv=$("cv"),rm=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+if(typeof THREE==="undefined")return;
+try{
+var mob=innerWidth<700,r=new THREE.WebGLRenderer({canvas:cv,alpha:true,antialias:!mob,powerPreference:"low-power"});
+r.setPixelRatio(Math.min(devicePixelRatio||1,mob?1.25:1.75));
+var sc=new THREE.Scene(),cam=new THREE.PerspectiveCamera(50,1,.1,3500),seg=mob?32:56,t=0,p=0,run=false;
+function cvs(w,h){var k=document.createElement("canvas");k.width=w;k.height=h;return k}
+function TX(k){return new THREE.CanvasTexture(k)}
+function glow(c){var k=cvs(128,128),g=k.getContext("2d"),gr=g.createRadialGradient(64,64,0,64,64,64);gr.addColorStop(0,c);gr.addColorStop(1,"rgba(0,0,0,0)");g.fillStyle=gr;g.fillRect(0,0,128,128);return TX(k)}
+function spr(c,x,y,z,s){var o=new THREE.Sprite(new THREE.SpriteMaterial({map:glow(c),blending:THREE.AdditiveBlending,transparent:true,depthWrite:false}));o.position.set(x,y,z);o.scale.set(s,s,1);sc.add(o);return o}
+spr("rgba(90,70,255,.45)",-700,300,-900,1100);spr("rgba(34,211,238,.25)",800,-250,-800,900);spr("rgba(139,92,246,.35)",100,-600,-1000,1000);spr("rgba(255,120,200,.18)",-500,-300,900,800);
+function pts(n,r0,r1,size,col,flat){var a=new Float32Array(n*3);for(var i=0;i<n;i++){var u=Math.random()*6.283,v=Math.acos(2*Math.random()-1),q=r0+Math.random()*(r1-r0);a[i*3]=q*Math.sin(v)*Math.cos(u);a[i*3+1]=flat?(Math.random()-.5)*flat:q*Math.sin(v)*Math.sin(u);a[i*3+2]=flat?q*Math.sin(v)*Math.sin(u)*0+Math.sin(u)*q:q*Math.cos(v);if(flat)a[i*3]=Math.cos(u)*q}
+var g=new THREE.BufferGeometry();g.setAttribute("position",new THREE.BufferAttribute(a,3));var o=new THREE.Points(g,new THREE.PointsMaterial({size:size,color:col,transparent:true,opacity:.9,depthWrite:false}));sc.add(o);return o}
+pts(mob?900:2200,800,1300,3.2,0xffffff);var dust=pts(mob?80:200,12,140,.5,0x7fd8ff);var belt=pts(mob?500:1300,47,56,.55,0xa8a196,2.4);
+function earthTex(){var W=1024,H=512,k=cvs(W,H),g=k.getContext("2d"),X=function(o){return(o+180)/360*W},Y=function(a){return(90-a)/180*H};
+var og=g.createLinearGradient(0,0,0,H);og.addColorStop(0,"#0a2a63");og.addColorStop(.5,"#0f5aa8");og.addColorStop(1,"#0a2a63");g.fillStyle=og;g.fillRect(0,0,W,H);
+var P=[[[-168,66],[-140,70],[-110,73],[-85,70],[-65,60],[-56,50],[-67,45],[-75,38],[-80,32],[-80,26],[-83,30],[-90,29],[-97,26],[-97,20],[-91,18],[-87,21],[-88,16],[-83,10],[-78,8],[-80,7],[-86,11],[-92,15],[-105,20],[-110,24],[-112,30],[-117,32],[-124,40],[-124,48],[-135,58],[-150,60],[-165,56]],
+[[-78,8],[-72,12],[-62,10],[-52,5],[-35,-5],[-39,-15],[-48,-26],[-58,-37],[-65,-42],[-68,-52],[-74,-50],[-73,-38],[-71,-20],[-76,-14],[-81,-5],[-80,0],[-77,4]],
+[[-17,21],[-10,30],[-6,36],[10,37],[20,32],[32,31],[34,28],[43,12],[51,12],[40,-3],[40,-15],[35,-24],[32,-29],[25,-34],[18,-34],[12,-18],[13,-8],[9,-1],[9,4],[-8,4],[-17,14]],
+[[-10,36],[-9,43],[-1,46],[-4,48],[2,51],[8,54],[10,57],[5,62],[15,69],[30,71],[60,69],[80,73],[110,77],[140,72],[170,70],[180,66],[160,60],[155,52],[142,46],[135,43],[127,37],[122,40],[121,31],[110,20],[106,10],[100,13],[103,2],[98,8],[93,20],[88,22],[80,13],[77,8],[73,18],[67,25],[57,25],[56,27],[50,30],[48,29],[56,24],[59,22],[52,16],[43,13],[35,28],[35,32],[28,36],[26,40],[23,37],[20,40],[16,38],[12,44],[3,43],[-1,37]],
+[[114,-22],[122,-18],[130,-12],[137,-12],[142,-11],[146,-19],[153,-26],[150,-37],[141,-38],[135,-35],[128,-32],[115,-34]],
+[[-55,60],[-45,60],[-20,70],[-20,82],[-60,82],[-70,76]]],path=new Path2D();
+P.forEach(function(q){q.forEach(function(c,i){var x=X(c[0]),y=Y(c[1]);i?path.lineTo(x,y):path.moveTo(x,y)});path.closePath()});
+[[47,-19,5,10],[110,-2,14,4],[125,-3,10,4],[138,36,5,9],[-2,54,4,7],[172,-42,5,8],[-80,21,9,3]].forEach(function(e){path.moveTo(X(e[0])+e[2],Y(e[1]));path.ellipse(X(e[0]),Y(e[1]),e[2],e[3],0,0,6.3)});
+g.lineWidth=7;g.strokeStyle="rgba(90,210,230,.38)";g.stroke(path);g.fillStyle="#2f7a42";g.fill(path);
+g.save();g.clip(path);
+[[10,22,200,45],[48,25,60,30],[133,-26,90,40],[-110,35,60,25],[70,42,90,30]].forEach(function(e){g.fillStyle="rgba(196,170,100,.55)";g.beginPath();g.ellipse(X(e[0]),Y(e[1]),e[2]/2,e[3]/2,0,0,6.3);g.fill()});
+[[20,0,230,70],[-60,-5,120,80],[100,10,110,40]].forEach(function(e){g.fillStyle="rgba(20,90,45,.45)";g.beginPath();g.ellipse(X(e[0]),Y(e[1]),e[2]/2,e[3]/2,0,0,6.3);g.fill()});
+for(var i=0;i<7000;i++){g.fillStyle=["rgba(20,70,30,.28)","rgba(120,150,70,.22)","rgba(150,120,70,.18)"][i%3];g.fillRect(Math.random()*W,Math.random()*H,2+Math.random()*3,2+Math.random()*3)}
+var sn=g.createLinearGradient(0,0,0,H);sn.addColorStop(0,"rgba(255,255,255,.9)");sn.addColorStop(.12,"rgba(255,255,255,0)");sn.addColorStop(.9,"rgba(255,255,255,0)");sn.addColorStop(1,"rgba(255,255,255,1)");g.fillStyle=sn;g.fillRect(0,0,W,H);g.restore();
+var pg=g.createLinearGradient(0,0,0,H);pg.addColorStop(0,"rgba(240,248,255,.95)");pg.addColorStop(.06,"rgba(240,248,255,0)");pg.addColorStop(.93,"rgba(240,248,255,0)");pg.addColorStop(1,"rgba(240,248,255,1)");g.fillStyle=pg;g.fillRect(0,0,W,H);
+var rg=g.createRadialGradient(X(30),Y(-2),0,X(30),Y(-2),16);rg.addColorStop(0,"rgba(255,190,70,1)");rg.addColorStop(.35,"rgba(255,170,50,.7)");rg.addColorStop(1,"rgba(255,170,50,0)");g.fillStyle=rg;g.beginPath();g.arc(X(30),Y(-2),16,0,6.3);g.fill();
+return TX(k)}
+function cloudTex(){var k=cvs(512,256),g=k.getContext("2d");for(var i=0;i<130;i++){var x=Math.random()*512,y=20+Math.random()*216,s=14+Math.random()*34,gr=g.createRadialGradient(x,y,0,x,y,s);gr.addColorStop(0,"rgba(255,255,255,.55)");gr.addColorStop(1,"rgba(255,255,255,0)");g.fillStyle=gr;g.save();g.translate(x,y);g.scale(2.2,.7);g.translate(-x,-y);g.beginPath();g.arc(x,y,s,0,6.3);g.fill();g.restore()}return TX(k)}
+function band(c){var k=cvs(256,128),g=k.getContext("2d");for(var y=0;y<128;y+=3){g.fillStyle=c[Math.floor(Math.random()*c.length)];g.fillRect(0,y,256,4)}return TX(k)}
+function rock(a,b){var k=cvs(256,128),g=k.getContext("2d");g.fillStyle=a;g.fillRect(0,0,256,128);for(var i=0;i<260;i++){g.globalAlpha=.15+Math.random()*.3;g.fillStyle=b;g.beginPath();g.arc(Math.random()*256,Math.random()*128,1+Math.random()*7,0,6.3);g.fill()}return TX(k)}
+sc.add(new THREE.Mesh(new THREE.SphereGeometry(8,seg,seg),new THREE.MeshBasicMaterial({map:rock("#ffb02e","#ff6a00")})));
+spr("rgba(255,200,90,.9)",0,0,0,46);spr("rgba(255,140,40,.35)",0,0,0,130);
+sc.add(new THREE.PointLight(0xfff2d8,2.3,0,0),new THREE.AmbientLight(0x233a7a,.55));
+var PL=[],earthG,moon;
+function addP(rad,orb,sp,map,a0,tilt,shine){var g=new THREE.Group(),m=new THREE.Mesh(new THREE.SphereGeometry(rad,seg,seg),new THREE.MeshPhongMaterial({map:map,shininess:shine||4}));g.add(m);sc.add(g);var o={g:g,m:m,r:orb,sp:sp,a0:a0};PL.push(o);
+var q=[],i;for(i=0;i<=128;i++)q.push(new THREE.Vector3(Math.cos(i/128*6.2832)*orb,0,Math.sin(i/128*6.2832)*orb));
+sc.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(q),new THREE.LineBasicMaterial({color:0x5b6cc8,transparent:true,opacity:.28})));m.rotation.z=tilt||0;return o}
+addP(.7,14,1.6,rock("#8c8279","#5a534c"),1.2);addP(1.5,20,1.2,rock("#d9b36a","#c28f3c"),3.4);
+var E1=addP(2.4,30,1,earthTex(),0,.41,24);earthG=E1.g;
+var cl=new THREE.Mesh(new THREE.SphereGeometry(2.47,seg,seg),new THREE.MeshPhongMaterial({map:cloudTex(),transparent:true,depthWrite:false,opacity:.85}));earthG.add(cl);
+earthG.add(new THREE.Mesh(new THREE.SphereGeometry(2.95,48,48),new THREE.ShaderMaterial({transparent:true,side:THREE.BackSide,blending:THREE.AdditiveBlending,depthWrite:false,vertexShader:"varying vec3 n;void main(){n=normalize(normalMatrix*normal);gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}",fragmentShader:"varying vec3 n;void main(){float i=pow(.72-dot(n,vec3(0,0,1.)),3.);gl_FragColor=vec4(.25,.55,1.,1.)*i*1.6;}"})));
+moon=new THREE.Mesh(new THREE.SphereGeometry(.65,28,28),new THREE.MeshPhongMaterial({map:rock("#a9a9ad","#6e6e74"),shininess:3}));earthG.add(moon);
+addP(1.2,40,.8,rock("#b5502d","#7a2f17"),5.1,.44);addP(6,62,.45,band(["#c9a37a","#e4cfa8","#a8764d","#d8bb94"]),2.2,.05);
+var S=addP(5,86,.33,band(["#d8c28a","#e9d9a8","#c4ab6d"]),4.4,.47),rg2=new THREE.Mesh(new THREE.RingGeometry(6.4,10.8,72),new THREE.MeshBasicMaterial({color:0xd9c58f,side:THREE.DoubleSide,transparent:true,opacity:.65}));rg2.rotation.x=Math.PI/2+.45;S.g.add(rg2);
+addP(3,108,.24,band(["#8ed5dc","#a6e3e8","#7cc6cf"]),0.7,1.4);addP(2.9,126,.19,band(["#3f63d8","#5a7df0","#2f4fb8"]),5.8,.5);
+function lay(){var w=innerWidth,h=innerHeight;r.setSize(w,h,false);cam.aspect=w/h;cam.setViewOffset(w,h,w/h>1.1?-w*.16:0,0,w,h);cam.updateProjectionMatrix()}
+function frame(){var e=p*p*(3-2*p),k=Math.max(1,.9/cam.aspect);
+PL.forEach(function(o){var a=o.a0+t*o.sp*.03;o.g.position.set(Math.cos(a)*o.r,0,Math.sin(a)*o.r);o.m.rotation.y=t*.15});
+cl.rotation.y=t*.2;moon.position.set(Math.cos(t*.5)*5.2,Math.sin(t*.5)*.8,Math.sin(t*.5)*5.2);belt.rotation.y=t*.01;
+var E=earthG.position,ux=E.x/30,uz=E.z/30;
+cam.position.set(E.x+ux*(-4+e*50)+(-uz)*(-8*(1-e)),2+e*260*k,E.z+uz*(-4+e*50)+ux*(-8*(1-e)));
+cam.lookAt(E.x*(1-e),0,E.z*(1-e));r.render(sc,cam)}
+function sp(){var h=document.documentElement.scrollHeight-innerHeight;p=h>0?Math.min(1,Math.max(0,scrollY/h)):0}
+function loop(){if(!run)return;t+=.016;frame();requestAnimationFrame(loop)}
+addEventListener("resize",function(){lay();sp();if(!run)frame()});
+addEventListener("scroll",function(){sp();if(!run)requestAnimationFrame(frame)},{passive:true});
+document.addEventListener("visibilitychange",function(){var go=!rm&&!document.hidden;if(go&&!run){run=true;loop()}else if(!go)run=false});
+lay();sp();frame();if(!rm){run=true;loop()}
+}catch(e){cv.style.display="none"}
+})();
+</script>
+</body>
+</html>
